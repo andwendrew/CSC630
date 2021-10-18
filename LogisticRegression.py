@@ -68,8 +68,9 @@ class LogisticRegression():
             else: # adjusting lr if cost keeps going up
                 lr = lr * 0.95
                 
-            print("Cost is: " + str(newcost))
-            print(newdict)
+            if(iterations % 5000 == 0): # verbal update every 5000 iterations else too much output
+                print("Cost is: " + str(newcost))
+                print(newdict)
         
             iterations = iterations + 1 
             
@@ -88,15 +89,9 @@ class LogisticRegression():
         proj_values = []
         
         for i in range(0, n):
-            proj_values.append(1/(1 + math.exp(-1*(np.dot(self.minarray[0:d], X[i]) + self.minarray[d]))))
+            proj_values.append(1/(1 + math.exp(-1*(np.dot(self.minarray[0:d], X[i]) + self.minarray[d])))) # plugging in the variables from minarray
         
         return proj_values
             
-model = LogisticRegression(0.00001, 50000)
-#model.fit([[1], [1.5], [1.5], [3], [4], [4], [4.5], [6]], [0, 0, 0, 0, 0, 1, 1, 1])
-model.fit([[0,0],[2,1],[3,5],[5,6],[5,7],[6,9],[7,11]],[0,0,0,0,0,1,1])
-#model.fit([[1,1,1],[-1,-1,-1],[-2,-2,-2],[-2,-2,0],[0,-2,-2],[3,0,4]],[1,0,0,0,0,1])
-
-print(model.predict([[0, 0], [0, 6], [1.5, 2], [6.5, 3], [4, 3]]))
             
         
