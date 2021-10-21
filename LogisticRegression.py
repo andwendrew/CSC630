@@ -28,7 +28,7 @@ class LogisticRegression():
         
         # Now, let's perform the gradient descent on the cost function, which we wish to minimize!
         
-        storage = 2*np.random.rand(d+1) - 1 # this array will store and update the values [m__0, m_1, ... m_d-1, b] throughout this gradient descent
+        storage = 0.8 * np.random.rand(d+1) - 0.4 # this array will store and update the values [m_0, m_1, ... m_d-1, b] throughout this gradient descent
         iterations = 0
         self.minarray = storage
         lr = self.lr
@@ -63,11 +63,9 @@ class LogisticRegression():
             if(newcost < cost_function.evaluate(mindict)): # update the array that stores the variables that minimizes cost
                 self.minarray = storage
             
-            lr = lr * 0.9995 # temporary way of adjusting learning rate
-            if(newcost > cost):
-                lr = lr * 0.99
+            lr = lr # temporary way of adjusting learning rate
                 
-            if(iterations % 100 == 0): # verbal update every 50 iterations else too much output
+            if(iterations % 50 == 0): # verbal update every 50 iterations else too much output
                 print("Cost is: " + str(newcost))
                 print(newdict)
         
@@ -137,10 +135,5 @@ class LogisticRegression():
             proj_values.append(1/(1 + math.exp(-1*(np.dot(m_dict_toarray[0:d], X[i]) + m_dict_toarray[d])))) # plugging in the variables from minarray
         
         print(proj_values)
-        return proj_values
-            
-model = LogisticRegression(0.001, 5000)
-#model.fit([[0, -2], [1,0], [3, 1], [2, 5], [1.5, 6]], [0,0,1,1,1]) 
-model.n_fit([[0, -2], [1,0], [3, 1], [2, 5], [1.5, 6]], [0,0,1,1,1], 5, 0.001, 5000)  
-model.predict_n_fit([[-1, -3], [2,4]])        
+        return proj_values   
         
