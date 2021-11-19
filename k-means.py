@@ -63,7 +63,6 @@ def closest_index(x, X): # takes in array x that is a point, and array X of poin
         if distance(x, X[i]) < distance(x, X[index]):
             index = i
     return index
-        
 
 class k_means_clustering():
     
@@ -71,6 +70,7 @@ class k_means_clustering():
         pass
         
     def fit(self, X, k): # fit to a dataset X to k clusters
+        self.clustering = []
         n, d = np.shape(X) # n counts the number of data points in X, and d is dimension of the data points in X
         
         centroids = [] # create the centroids array 
@@ -80,7 +80,12 @@ class k_means_clustering():
             clusters.append([]) # here, we are creating the k clusters and setting them to initially be empty
             centroids.append(X[i]) # here, we just set the initial array of centroids to be the first k points. 
         
-        while True:              
+        centroids = np.array(centroids)
+        
+        count = 1
+        while True: 
+            print("Iteration: " + f'{count}') 
+            print("Our centroids are:")
             print(centroids)
             for i in range(0, n): # assigning each point to a cluster based on the centroid it is closest to
                 clusters[closest_index(X[i], centroids)].append(X[i]) # for each X[i] in X, get index of centroid it is closest to, and add X[i]
@@ -88,14 +93,16 @@ class k_means_clustering():
             clustering_initial = []
             for i in range(0, k):
                 clustering_initial.append(clusters[i])
+            print("Our clusters are:")
             print(clustering_initial)
+            print("The Dunn Index of this clustering is: " + f'{dunn_index(clustering_initial)}')
             
             for i in range(0, k): # get new centroids
                 centroid = np.zeros(d)
                 for j in range(0, len(clusters[i])):
                     centroid = centroid + clusters[i][j]
                 centroid = centroid * 1/len(clusters[i])
-                centroids[i] = centroid 
+                centroids[i] = centroid
             
             for i in range(0, k): # reset the clusters
                 clusters[i] = []
@@ -108,6 +115,20 @@ class k_means_clustering():
             
             for i in range(0, k): # reset the clusters
                 clusters[i] = []
-
+                
+            count = count + 1
+            print('------------------------------------')
+            
+        self.clustering = clustering_initial
+        return self.clustering
+    
+    def predict(self, X, k): # run only after having run the fit method, this returns the cluster number for each point
+        array = []
+        n, d = np.shape(X)
+        for i in range (0, n):
+            for j in range(0, k):
+                if(X[i] in self.clustering[j]):
+                    array.append(j) 
+        return np.array(array)
         
 # the fit method successfully implements the logic behind the k-means algorithm    
