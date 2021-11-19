@@ -111,38 +111,3 @@ class k_means_clustering():
 
         
 # the fit method successfully implements the logic behind the k-means algorithm    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-  
