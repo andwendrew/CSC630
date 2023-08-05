@@ -9,7 +9,7 @@ class Variable():
         else:
             self.evaluate = evaluate 
         if gradient == None: 
-            self.gradient = lambda values: np.array(list(map((lambda x: int(x == self.name)), sorted(list(values.keys()))))) # thanks will for carry
+            self.gradient = lambda values: np.array(list(map((lambda x: int(x == self.name)), sorted(list(values.keys()))))) 
         else:
             self.gradient = gradient            
         if name != None:
